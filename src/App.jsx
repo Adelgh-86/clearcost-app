@@ -72,7 +72,8 @@ export default function App() {
   const [error, setError] = useState("");
   const set = (k,v) => setForm(f=>({...f,[k]:v}));
   const handleEstimate = async () => {
-if (!form.procedure || !form.planType) {setError("Please fill in Procedure and Plan Type at minimum.");
+if (!form.procedure || !form.planType) {
+setError("Please fill in Procedure and Plan Type at minimum.");
   return;
 }    setError("");setLoading(true);setResult(null);
     const prompt = `You are a healthcare cost estimation engine. Patient details: Insurer: ${form.insurerName||"Unknown"}, Plan: ${form.planType}, Network: ${form.networkStatus}, Procedure: ${form.procedure}, Deductible: $${form.deductible}, Deductible Met: $${form.deductibleMet||0}, OOP Max: $${form.oopMax||"Unknown"}, OOP Met: $${form.oopMet||0}, Coinsurance: ${form.coinsurance||"Unknown"}%, Copay: $${form.copay||0}. Respond ONLY with valid JSON: {"procedureCost":<number>,"allowedAmount":<number>,"deductibleApplied":<number>,"coinsuranceAmount":<number>,"copayAmount":<number>,"estimatedPatientCost":<number>,"planPays":<number>,"oopRemaining":<number>,"confidence":"high","notes":"<explanation>","priorAuthRequired":false,"priorAuthNote":""}`;
@@ -103,7 +104,7 @@ if (!form.procedure || !form.planType) {setError("Please fill in Procedure and P
         <div style={{background:"#0a1a2b",border:"1px solid #132d47",borderRadius:"12px",padding:"20px"}}>
           <p style={{color:"#64b5f6",fontSize:"0.75rem",textTransform:"uppercase",marginBottom:"12px"}}>Benefits</p>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px"}}>
-            {[["deductible","Deductible *"],["deductibleMet","Deductible Met"],["oopMax","OOP Max"],["oopMet","OOP Met"],["coinsurance","Coinsurance %"],["copay","Copay $"]].map(([k,label])=>(
+            {[["deductible","Deductible (0 if Medicare)"],["deductibleMet","Deductible Met"],["oopMax","OOP Max"],["oopMet","OOP Met"],["coinsurance","Coinsurance %"],["copay","Copay $"]].map(([k,label])=>(
               <input key={k} type="number" placeholder={label} value={form[k]} onChange={e=>set(k,e.target.value)} style={{background:"#0a1e30",border:"1px solid #1e3a5f",color:"#e0e0e0",borderRadius:"8px",padding:"10px"}}/>
             ))}
           </div>
