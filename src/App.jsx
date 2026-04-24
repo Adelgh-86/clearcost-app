@@ -104,7 +104,7 @@ setError("Please fill in Procedure and Plan Type at minimum.");
         <div style={{background:"#0a1a2b",border:"1px solid #132d47",borderRadius:"12px",padding:"20px"}}>
           <p style={{color:"#64b5f6",fontSize:"0.75rem",textTransform:"uppercase",marginBottom:"12px"}}>Benefits</p>
           <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"10px"}}>
-            {[["deductible","Deductible (0 if Medicare)"],["deductibleMet","Deductible Met"],["oopMax","OOP Max"],["oopMet","OOP Met"],["coinsurance","Coinsurance %"],["copay","Copay $"]].map(([k,label])=>(
+            {[["deductible","Deductible"],["deductibleMet","Deductible Met"],["oopMax","OOP Max"],["oopMet","OOP Met"],["coinsurance","Coinsurance %"],["copay","Copay $"]].map(([k,label])=>(
               <input key={k} type="number" placeholder={label} value={form[k]} onChange={e=>set(k,e.target.value)} style={{background:"#0a1e30",border:"1px solid #1e3a5f",color:"#e0e0e0",borderRadius:"8px",padding:"10px"}}/>
             ))}
           </div>
