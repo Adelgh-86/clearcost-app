@@ -72,8 +72,9 @@ export default function App() {
   const [error, setError] = useState("");
   const set = (k,v) => setForm(f=>({...f,[k]:v}));
   const handleEstimate = async () => {
-    if (!form.procedure||!form.planType||!form.deductible){setError("Please fill in Procedure, Plan Type, and Deductible at minimum.");return;}
-    setError("");setLoading(true);setResult(null);
+if (!form.procedure || !form.planType) {setError("Please fill in Procedure and Plan Type at minimum.");
+  return;
+}    setError("");setLoading(true);setResult(null);
     const prompt = `You are a healthcare cost estimation engine. Patient details: Insurer: ${form.insurerName||"Unknown"}, Plan: ${form.planType}, Network: ${form.networkStatus}, Procedure: ${form.procedure}, Deductible: $${form.deductible}, Deductible Met: $${form.deductibleMet||0}, OOP Max: $${form.oopMax||"Unknown"}, OOP Met: $${form.oopMet||0}, Coinsurance: ${form.coinsurance||"Unknown"}%, Copay: $${form.copay||0}. Respond ONLY with valid JSON: {"procedureCost":<number>,"allowedAmount":<number>,"deductibleApplied":<number>,"coinsuranceAmount":<number>,"copayAmount":<number>,"estimatedPatientCost":<number>,"planPays":<number>,"oopRemaining":<number>,"confidence":"high","notes":"<explanation>","priorAuthRequired":false,"priorAuthNote":""}`;
     try {
       const response = await fetch("https://api.anthropic.com/v1/messages",{method:"POST",headers:{"Content-Type":"application/json","x-api-key":API_KEY,"anthropic-version":"2023-06-01","anthropic-dangerous-direct-browser-access":"true"},body:JSON.stringify({model:"claude-haiku-4-5-20251001",max_tokens:1000,messages:[{role:"user",content:prompt}]})});
